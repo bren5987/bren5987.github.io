@@ -47,7 +47,7 @@ button:hover {
   font-weight: bold;
 }
 
-reset:hover {
+.reset:hover {
   text-decoration: underline;
 }
 
