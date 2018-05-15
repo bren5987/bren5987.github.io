@@ -33,42 +33,22 @@
 
     <script>
 
-      var btn = document.querySelectorAll('button');
-      btn.forEach(button =>
-        button.addEventListener('click', singleRound));
-
-      btn.forEach(button =>
-        button.addEventListener('click', appearImageP));
-
-      btn.forEach(button =>
-        button.addEventListener('transitionend', removeChange));
+      var computerScoreSum = 0;
+      var playerScoreSum = 0;
 
       var reset = document.querySelector('p');
         reset.addEventListener('click', resetGame);
 
-      var computerScoreSum = 0;
-      var playerScoreSum = 0;
+      var btn = document.querySelectorAll('button');
+        btn.forEach(button =>
+          button.addEventListener('click', singleRound));
 
-      function resetGame() {
-        var gameRes = document.querySelector('div#gameResult');
-        var scoreRes = document.querySelector('div#finalScore');
-        var imgP = document.querySelector('div.player');
-        var imgC = document.querySelector('div.computer');
-        var playerScoreRes = document.querySelector('div#playerScore');
-        var computerScoreRes = document.querySelector('div#computerScore');
-        var rst = document.querySelector('p.reset');
-        rst.textContent = '';
-        computerScoreRes.textContent = '';
-        playerScoreRes.textContent = '';
-        gameRes.textContent = '';
-        scoreRes.textContent = '';
-        imgP.classList.remove('selectionR');
-        imgP.classList.remove('selectionP');
-        imgP.classList.remove('selectionS');
-        imgC.classList.remove('selectionRC');
-        imgC.classList.remove('selectionPC');
-        imgC.classList.remove('selectionSC');
-      }
+        btn.forEach(button =>
+          button.addEventListener('click', appearImageP));
+
+        btn.forEach(button =>
+          button.addEventListener('transitionend', removeChange));
+
 
       function appearImageP(e) {
         var imgP = document.querySelector('div.player');
@@ -110,8 +90,8 @@
       function singleRound(e) {
         var playerSelection =this.id;
         var computerSelection = computerPlay();
-        var computerScore;
-        var playerScore;
+        var computerScore = '0';
+        var playerScore = '0';
         var imgC = document.querySelector('div.computer');
         document.getElementById('finalScore').innerHTML = '';
         imgC.classList.remove('selectionRC');
@@ -143,14 +123,14 @@
           document.getElementById('finalScore').innerHTML = 'COMPUTER WINS!';
           var reset = document.querySelector('p.reset');
           reset.textContent = 'RESET';
-          computerScoreSum = 0;
-          playerScoreSum = 0;
+          btn.forEach(button =>
+            button.setAttribute('disabled', 'true'));
         } else if (playerScoreSum == 5) {
           document.getElementById('finalScore').innerHTML = 'YOU WIN!';
           var reset = document.querySelector('p.reset');
           reset.textContent = 'RESET';
-          computerScoreSum = 0;
-          playerScoreSum = 0;
+          btn.forEach(button =>
+            button.setAttribute('disabled', 'true'));
         }
 
         if (computerSelection === 'rock') {
@@ -162,7 +142,31 @@
         }
       }
 
-//troubleshooting
+      function resetGame() {
+        computerScoreSum = 0;
+        playerScoreSum = 0;
+        var gameRes = document.querySelector('div#gameResult');
+        var scoreRes = document.querySelector('div#finalScore');
+        var imgP = document.querySelector('div.player');
+        var imgC = document.querySelector('div.computer');
+        var playerScoreRes = document.querySelector('div#playerScore');
+        var computerScoreRes = document.querySelector('div#computerScore');
+        var rst = document.querySelector('p.reset');
+
+        rst.textContent = '';
+        computerScoreRes.textContent = '0';
+        playerScoreRes.textContent = '0';
+        gameRes.textContent = '';
+        scoreRes.textContent = '';
+        imgP.classList.remove('selectionR');
+        imgP.classList.remove('selectionP');
+        imgP.classList.remove('selectionS');
+        imgC.classList.remove('selectionRC');
+        imgC.classList.remove('selectionPC');
+        imgC.classList.remove('selectionSC');
+        btn.forEach(button =>
+          button.removeAttribute('disabled'));
+      }
 
 
     </script>
