@@ -11,9 +11,9 @@
     <div class='btns'>
       <div class='btnPlayer'>
         <div class='titles'>You</div>
-        <button id='rock'><img src="images/rock.png" width=180px height=180px></button>
-        <button id='paper'><img src="images/paper.png" width=180px height=180px></button>
-        <button id='scissors'><img src="images/scissors.png" width=180px height=180px></button>
+        <button class='btnP' id='rock'><img src="images/rock.png" width=180px height=180px></button>
+        <button class='btnP' id='paper'><img src="images/paper.png" width=180px height=180px></button>
+        <button class='btnP' id='scissors'><img src="images/scissors.png" width=180px height=180px></button>
         <div id='playerScore'></div>
       </div>
 
@@ -39,15 +39,15 @@
       var reset = document.querySelector('p');
         reset.addEventListener('click', resetGame);
 
-      var btn = document.querySelectorAll('button');
-        btn.forEach(button =>
-          button.addEventListener('click', singleRound));
+      var btn = document.querySelectorAll('button.btnP');
+        btn.forEach(btn =>
+          btn.addEventListener('click', singleRound));
 
-        btn.forEach(button =>
-          button.addEventListener('click', appearImageP));
+        btn.forEach(btn =>
+          btn.addEventListener('click', appearImageP));
 
-        btn.forEach(button =>
-          button.addEventListener('transitionend', removeChange));
+        btn.forEach(btn =>
+          btn.addEventListener('transitionend', removeChange));
 
 
       function appearImageP(e) {

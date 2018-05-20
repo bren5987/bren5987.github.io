@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Sketchpad</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <button>New Grid</button><br><br>
+    <div class='container'></div>
+
+
+    <script>
+      var container = document.querySelector('.container');
+      var btn = document.querySelector('button');
+      btn.addEventListener('click', newGrid);
+
+      createGrid(16);
+      eventListener();
+
+
+      function createGrid(x) {
+        container.setAttribute('style',
+          'display: grid; grid-template-columns: repeat(' + x + ', 1fr); grid-template-rows: repeat(' + x + ', 1fr)');
+        for(var i=0; i<(x*x); i++) {
+          var div = document.createElement('div');
+          div.classList.add('sqr');
+          container.appendChild(div);
+          div.setAttribute('style',
+            'width: auto; height: auto');
+        }
+      }
+
+      function newGrid() {
+        var size = prompt('How many squares in each side?');
+        var div = document.querySelectorAll('.sqr');
+        div.forEach(div =>
+          container.removeChild(div));
+        createGrid(size);
+        eventListener();
+      }
+
+      function eventListener() {
+        var divs = document.querySelectorAll('div.sqr');
+        divs.forEach(divs =>
+          divs.addEventListener('mouseover', background));
+      }
+
+      function background(e) {
+        this.setAttribute('style', 'background: rgb('+ randomNumber() + ',' + randomNumber() + ',' + randomNumber() + ')');
+      }
+
+      function randomNumber() {
+        return(Math.floor(Math.random() * 255));
+      }
+
+
+
+
+
+
+
+    </script>
+  </body>
+</html>
