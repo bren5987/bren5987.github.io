@@ -7,8 +7,6 @@
   border: solid gray 5px;
   height: 60px;
   font-size: 35px;
-  margin-left: 28%;
-  margin-right: 28%;
   color: white;
   font-family: digital;
   margin-top:50px;
@@ -21,10 +19,8 @@
 #input {
   border: solid gray 5px;
   height: 60px;
-  font-size: 53px;
+  font-size: 48px;
   font-family: digital;
-  margin-left: 28%;
-  margin-right: 28%;
   text-align: right;
   border-top: 0;
   box-sizing: border-box;
@@ -55,13 +51,17 @@ button:active {
   background-color: silver;
   display: grid;
   grid-template: 1fr 1fr 1fr 1fr 1fr / 1fr 1fr 1fr 1fr;
-  margin-left: 28%;
-  margin-right: 28%;
   justify-self: center;
   box-sizing: border-box;
   margin-top: 0;
   height: 600px;
+}
 
+.center {
+  display: inline-block;
+  left: 32%;
+  position:absolute;
+  width: auto;
 }
 
 #delete, #deleteA {
@@ -98,4 +98,3 @@ button:active {
   grid-column: 1 /span 2;
   width: 200px;
 }
-

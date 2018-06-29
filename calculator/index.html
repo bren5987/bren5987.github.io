@@ -6,30 +6,31 @@
   </head>
 
   <body>
-
+    <div class= 'center'>
     <div id = 'staticInput'></div>
     <div id ='input'></div>
-    <div class = 'keyboard'>
-      <button id = 'delete' onClick = "deleteOne(input.innerHTML)"><<</button>
-      <button id = 'deleteA' onClick = "deleteAll(input.innerHTML)">C</button>
-      <button id = '/' class = 'div' onClick='printInput(this.id)'>/</button>
-      <button id = '*' class = 'times' onClick='printInput(this.id)'>x</button>
-      <button id = '+' class = 'plus' onClick='printInput(this.id)'>+</button>
-      <button id = '-' class = 'minus' onClick='printInput(this.id)'>-</button>
-      <button id = "1" onClick='printInput(this.id)'>1</button>
-      <button id = "2" onClick='printInput(this.id)'>2</button>
-      <button id = "3" onClick='printInput(this.id)'>3</button>
-      <button id = "4" onClick='printInput(this.id)'>4</button>
-      <button id = "5" onClick='printInput(this.id)'>5</button>
-      <button id = "6" onClick='printInput(this.id)'>6</button>
-      <button id = "7" onClick='printInput(this.id)'>7</button>
-      <button id = "8" onClick='printInput(this.id)'>8</button>
-      <button id = "9" onClick='printInput(this.id)'>9</button>
-      <button id = "0" class='cero' onClick='printInput(this.id)'>0</button>
-      <button id = '.' onClick='printInput(this.id)'>.</button>
-      <button class = 'enter' onClick = "operate(input.innerHTML)">=</button>
-    </div>
 
+      <div class = 'keyboard'>
+        <button id = 'delete' onClick = "deleteOne(input.innerHTML)"><<</button>
+        <button id = 'deleteA' onClick = "deleteAll(input.innerHTML)">C</button>
+        <button id = '/' class = 'div' onClick='printInput(this.id)'>/</button>
+        <button id = '*' class = 'times' onClick='printInput(this.id)'>x</button>
+        <button id = '+' class = 'plus' onClick='printInput(this.id)'>+</button>
+        <button id = '-' class = 'minus' onClick='printInput(this.id)'>-</button>
+        <button id = "1" onClick='printInput(this.id)'>1</button>
+        <button id = "2" onClick='printInput(this.id)'>2</button>
+        <button id = "3" onClick='printInput(this.id)'>3</button>
+        <button id = "4" onClick='printInput(this.id)'>4</button>
+        <button id = "5" onClick='printInput(this.id)'>5</button>
+        <button id = "6" onClick='printInput(this.id)'>6</button>
+        <button id = "7" onClick='printInput(this.id)'>7</button>
+        <button id = "8" onClick='printInput(this.id)'>8</button>
+        <button id = "9" onClick='printInput(this.id)'>9</button>
+        <button id = "0" class='cero' onClick='printInput(this.id)'>0</button>
+        <button id = '.' onClick='printInput(this.id)'>.</button>
+        <button class = 'enter' onClick = "operate(input.innerHTML)">=</button>
+      </div>
+    </div>
     <script>
 
       input = document.getElementById("input")
