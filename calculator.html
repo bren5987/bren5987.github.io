@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Practice</title>
+    <link rel="stylesheet" href="calculator/style.css">
+  </head>
+
+  <body>
+
+    <div id = 'staticInput'></div>
+    <div id ='input'></div>
+    <div class = 'keyboard'>
+      <button id = 'delete' onClick = "deleteOne(input.innerHTML)"><<</button>
+      <button id = 'deleteA' onClick = "deleteAll(input.innerHTML)">C</button>
+      <button id = '/' class = 'div' onClick='printInput(this.id)'>/</button>
+      <button id = '*' class = 'times' onClick='printInput(this.id)'>x</button>
+      <button id = '+' class = 'plus' onClick='printInput(this.id)'>+</button>
+      <button id = '-' class = 'minus' onClick='printInput(this.id)'>-</button>
+      <button id = "1" onClick='printInput(this.id)'>1</button>
+      <button id = "2" onClick='printInput(this.id)'>2</button>
+      <button id = "3" onClick='printInput(this.id)'>3</button>
+      <button id = "4" onClick='printInput(this.id)'>4</button>
+      <button id = "5" onClick='printInput(this.id)'>5</button>
+      <button id = "6" onClick='printInput(this.id)'>6</button>
+      <button id = "7" onClick='printInput(this.id)'>7</button>
+      <button id = "8" onClick='printInput(this.id)'>8</button>
+      <button id = "9" onClick='printInput(this.id)'>9</button>
+      <button id = "0" class='cero' onClick='printInput(this.id)'>0</button>
+      <button id = '.' onClick='printInput(this.id)'>.</button>
+      <button class = 'enter' onClick = "operate(input.innerHTML)">=</button>
+    </div>
+
+    <script>
+
+      input = document.getElementById("input")
+      staticInput = document.getElementById("staticInput")
+
+
+      var frozenButtons = ['/', '*']
+
+
+      function updateFrozenB(click) {
+        var ctrlInput = input.innerHTML
+        var inputLength = ctrlInput.length
+        var lastClick = ctrlInput[inputLength-2]
+        var lastDot = ctrlInput.lastIndexOf('.')
+        var inputFromDot = ctrlInput.substring(lastDot)
+        var checkSumDot = inputFromDot.search(/\+{1,2}/)
+        var checkSubDot = inputFromDot.search(/\-{1,2}/)
+        var checkTmsDot = inputFromDot.search(/[\*]/)
+        var checkDivDot = inputFromDot.search(/[\/]/)
+        if (inputLength === 1 && click === '+' && click === ctrlInput[inputLength-1]||
+          inputLength === 1 && click === '-' && click === ctrlInput[inputLength-1] ||
+          click === '+' && lastClick=== '+' && click === ctrlInput[inputLength-1]||
+          click === '-' && lastClick=== '+'&& click === ctrlInput[inputLength-1]||
+          click === '+' && lastClick=== '-' && click === ctrlInput[inputLength-1] ||
+          click === '-' && lastClick=== '-' && click === ctrlInput[inputLength-1] ||
+          click === '+' && lastClick=== '/' && click === ctrlInput[inputLength-1] ||
+          click === '-' && lastClick=== '/' && click === ctrlInput[inputLength-1] ||
+          click === '+' && lastClick=== '*' && click === ctrlInput[inputLength-1] ||
+          click === '-' && lastClick=== '*' && click === ctrlInput[inputLength-1]) {
+          frozenButtons = ['/', '+', '-', '*']
+        } else if (click === '+' && click === ctrlInput[inputLength-1] ||
+        click === '-' && click === ctrlInput[inputLength-1] || click === '/'
+        && click === ctrlInput[inputLength-1] || click === '*' &&
+        click === ctrlInput[inputLength-1]) {
+          frozenButtons = ['/', '*']
+        } else if (click === '.' && click === ctrlInput[inputLength-1]) {
+          frozenButtons = ['.', '/', '+', '-', '*']
+        } else if (click === 'reset') {
+          frozenButtons = []
+          if (checkSumDot<0 && checkSubDot<0 && checkTmsDot<0 &&
+            checkDivDot<0 && lastDot>=0) {
+            frozenButtons.push('.')
+          }
+        }
+        if (checkSumDot<0 && checkSubDot<0 && checkTmsDot<0 &&
+          checkDivDot<0 && lastDot>=0) {
+          frozenButtons.push('.')
+        }
+        if (inputLength === 20) {
+          frozenButtons = ['.', '/', '+', '-', '*', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+        }
+      }
+
+      function printInput(click) {
+        var letters = /[A-Z]/gi
+        var searchL = input.innerHTML.match(letters)
+        if (searchL) {
+          deleteAll(input)
+          input.innerHTML += click
+        } else if (!frozenButtons.includes(click) ) {
+          input.innerHTML += click
+          updateFrozenB('reset')
+        }
+          updateFrozenB(click)
+          staticInput.innerHTML = input.innerHTML
+          if (staticInput.innerHTML === input.innerHTML) {
+            staticInput.style.color = 'white'
+          }
+      }
+
+      function operate(inputToProcess) {
+        try {
+          staticInput.style.color = 'blue'
+          callTimes = inputToProcess.match(/(\-{0,1}\d*\.{0,1}\d+)[\*](\-{0,1}\d*\.{0,1}\d+)/)
+          callDiv = inputToProcess.match(/(\-{0,1}\d*\.{0,1}\d+)[\/](\-{0,1}\d*\.{0,1}\d+)/)
+          callSum = inputToProcess.match(/(\-{0,1}\d*\.{0,1}\d+)[\+](\-{0,1}\d*\.{0,1}\d+)/)
+          callSub = inputToProcess.match(/(\-{0,1}\d*\.{0,1}\d+)[\-](\-{0,1}\d*\.{0,1}\d+)/)
+          var sm = inputToProcess.search(/\+/)
+          var sb = inputToProcess.search(/\-/)
+          var tm = inputToProcess.search(/\*/)
+          var dv = inputToProcess.search(/\//)
+          var noNegative = inputToProcess.substring(1)
+          var testSb = noNegative.search(/\-/)
+          var click = this.id
+
+          if (inputToProcess[inputToProcess.length-1] === '.' ||
+            inputToProcess[inputToProcess.length-1] === '-' ||
+            inputToProcess[inputToProcess.length-1] === '+' ||
+            inputToProcess[inputToProcess.length-1] === '*' ||
+            inputToProcess[inputToProcess.length-1] === '/') {
+            input.innerHTML = inputToProcess
+            return
+          }
+
+          if (sb===0 && sm<0 && tm<0 && dv<0 || sb<0 && sm<0 && tm<0 && dv<0) {
+            input.innerHTML = inputToProcess
+          }
+
+          if (sm === 0) {
+            inputToProcess = inputToProcess.substring(1)
+            operate(inputToProcess)
+          }
+
+          var timesPlus = /[\*][\+]/g
+          var divPlus = /[\/][\+]/g
+          var plusPlus = /[\+][\+]/g
+          var sbPlus = /[\-][\+]/g
+          var plusSb = /[\+][\-]/g
+          var findTimesP = inputToProcess.match(timesPlus)
+          var findDivP = inputToProcess.match(divPlus)
+          var findPlusP = inputToProcess.match(plusPlus)
+          var findSbP = inputToProcess.match(sbPlus)
+          var findPlusSb = inputToProcess.match(plusSb)
+
+
+          if (findTimesP || findDivP || findPlusP || findSbP || findPlusSb ) {
+            if (findTimesP) {
+              inputToProcess = inputToProcess.replace(/[\*][\+]/g, "*")
+            }
+            if (findDivP) {
+              inputToProcess = inputToProcess.replace(/[\/][\+]/g, "/")
+            }
+            if (findPlusP) {
+              inputToProcess = inputToProcess.replace(/[\+][\+]/g, "+")
+            }
+            if (findSbP) {
+              inputToProcess = inputToProcess.replace(/[\-][\+]/g, "-")
+            }
+            if (findPlusSb) {
+              inputToProcess = inputToProcess.replace(/[\+][\-]/g, "-")
+            }
+            operate(inputToProcess)
+          }
+
+          if (tm > 0 && tm < dv && findDivP === null && findTimesP === null &&
+            findPlusP === null && findSbP === null && findPlusSb === null &&
+            sm !== 0|| tm >0 && dv < 0 && findDivP === null &&
+            findTimesP === null && findPlusP === null && findSbP === null &&
+            findPlusSb === null && sm !== 0 || tm>0 && sb===0 && tm<dv &&
+            findDivP === null && findTimesP === null && findPlusP === null &&
+            findSbP === null && findPlusSb === null && sm !== 0) {
+            var to = /(\-{0,1}\d*\.{0,1}\d+)/g
+            var digits = callTimes[0].match(to)
+            var digitOne = digits[0]
+            var digitTwo = digits[1]
+            times(digitOne, digitTwo, inputToProcess)
+          } else if (dv > 0 && dv < tm && findDivP === null &&
+            findTimesP === null && findPlusP === null && findSbP === null &&
+            findPlusSb === null && sm !== 0 || dv>0 && tm<0 && findDivP === null &&
+            findTimesP === null && findPlusP === null && findSbP === null &&
+            findPlusSb === null && sm !== 0|| sb===0 && dv>0 && dv<tm &&
+            findDivP === null && findTimesP===null && findPlusP===null &&
+            findSbP===null && findPlusSb === null && sm!==0) {
+            var to = /(\-{0,1}\d*\.{0,1}\d+)/g
+            var digits = callDiv[0].match(to)
+            var digitOne = digits[0]
+            var digitTwo = digits[1]
+            div(digitOne, digitTwo, inputToProcess)
+          } else if (tm<0 && dv<0 && sm>0 && sm<sb && findDivP === null &&
+            findTimesP === null && findPlusP === null && findSbP === null &&
+            findPlusSb === null || tm<0 && dv<0 && sm>0 && sb<0 &&
+            findDivP === null && findTimesP === null && findPlusP === null &&
+            findSbP === null && findPlusSb === null || sb === 0 && sm>0 &&
+            tm<0 && dv<0 && findDivP === null && findTimesP === null &&
+            findPlusP === null && findSbP === null && findPlusSb === null &&
+            testSb<0 || sb === 0 && sm>0 && tm<0 && dv<0 && findDivP === null &&
+            findTimesP === null && findPlusP === null && findSbP === null &&
+            findPlusSb === null && testSb > sm ) {
+            var to = /(\-{0,1}\d*\.{0,1}\d+)/g
+            var digits = callSum[0].match(to)
+            var digitOne = digits[0]
+            var digitTwo = digits[1]
+            sum(digitOne, digitTwo, inputToProcess)
+          } else if (tm<0 && dv<0 && sb>0 && sb<sm && findDivP === null &&
+            findTimesP === null && findPlusP === null && findSbP === null &&
+            findPlusSb === null|| tm<0 && dv<0 && sb>0 && sm<0 &&
+            findDivP === null && findTimesP === null && findPlusP === null &&
+            findSbP === null && findPlusSb === null || callSub && sb===0 &&
+            tm<0 && dv<0 && findDivP === null && findTimesP === null &&
+            findPlusP === null && findSbP === null && findPlusSb === null) {
+            var to = /(\-{0,1}\d*\.{0,1}\d+)/g
+            var too = /(\d*\.{0,1}\d+)/g
+            var minmin = /(\-\-)/g
+            var digits = callSub[0].match(to)
+            var digitss = callSub[0].match(too)
+            var checkMinmim = callSub[0].match(minmin)
+
+              if (checkMinmim) {
+                var digitOne = digits[0]
+                var digitTwo = digits[1]
+                sub(digitOne, digitTwo, inputToProcess)
+              } else {
+                var digitOne = digits[0]
+                var digitTwo = digitss[1]
+                sub(digitOne, digitTwo, inputToProcess)
+              }
+          }
+        }
+        catch(error) {
+          input.innerHTML = input.innerHTML + 'I don\'t know that'
+        }
+      }
+
+      function times(a, b, inputTP) {
+        var so = a*b
+        var findminusMA = a.match(/[\-]/)
+        var findminusMB = b.match(/[\-]/)
+        so = Math.round(so*100)/100
+        if (findminusMA && findminusMB) {
+          var tim = inputTP.replace(/(\-{0,1}\d*\.{0,1}\d+)[\*](\-{0,1}\d*\.{0,1}\d+)/, "+" + so)
+        } else {
+          var tim = inputTP.replace(/(\-{0,1}\d*\.{0,1}\d+)[\*](\-{0,1}\d*\.{0,1}\d+)/, so)
+        }
+        var t = tim.match(/[\/\-\+\*]/)
+        if (t) {
+          operate(tim)
+        } else { input.innerHTML = so}
+        frozenButtons = []
+      }
+
+      function div(a, b, inputTP) {
+        var so = a/b
+        var findminusMA = a.search(/[\-]/)
+        var findminusMB = b.search(/[\-]/)
+        so = Math.round(so*100)/100
+        if (findminusMA === 0 && findminusMB === 0) {
+          var tim = inputTP.replace(/(\-{0,1}\d*\.{0,1}\d+)[\/](\-{0,1}\d*\.{0,1}\d+)/, "+" + so)
+        } else {
+          var tim = inputTP.replace(/(\-{0,1}\d*\.{0,1}\d+)[\/](\-{0,1}\d*\.{0,1}\d+)/, so)
+        }
+        var t = tim.match(/[\-\+\*\/]/)
+        if (t) {
+          operate(tim)
+        } else { input.innerHTML = so}
+        frozenButtons = []
+      }
+
+      function sum(a, b, inputTP) {
+        var so = +a + +b
+        so = Math.round(so*100)/100
+        var tim = inputTP.replace(/(\-{0,1}\d*\.{0,1}\d+)[\+](\-{0,1}\d*\.{0,1}\d+)/, so)
+        var t = tim.match(/[\-\+\*\/]/)
+        if (t) {
+          operate(tim)
+        } else { input.innerHTML = so}
+        frozenButtons = []
+      }
+
+      function sub(a, b, inputTP) {
+        var so = a-b
+        so = Math.round(so*100)/100
+        var tim = inputTP.replace(/(\-{0,1}\d*\.{0,1}\d+)[\-](\-{0,1}\d*\.{0,1}\d+)/, so)
+        var t = tim.match(/[\-\+\*\/]/)
+        if (t) {
+          operate(tim)
+        } else { input.innerHTML = so}
+        frozenButtons = []
+      }
+
+      function deleteAll(inputToDelete) {
+        input.innerHTML = ""
+        staticInput.innerHTML = ""
+        staticInput.style.color = 'white'
+        frozenButtons = ['/','*']
+      }
+
+      function deleteOne(inputToReduce) {
+        var oneLess = inputToReduce.substring(0, inputToReduce.length-1)
+        input.innerHTML = oneLess
+        staticInput.innerHTML = ""
+        staticInput.style.color = 'white'
+        frozenButtons = []
+        if (input.innerHTML.length ===0) {
+          frozenButtons = ['/','*']
+        }
+      }
+
+    </script>
+  </body>
+</html>
