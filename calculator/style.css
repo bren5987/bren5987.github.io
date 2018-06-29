@@ -1,0 +1,103 @@
+@font-face {
+  font-family: digital;
+  src: url(digital-7.ttf);
+}
+
+#staticInput {
+  border: solid gray 5px;
+  width: 45%;
+  height: 60px;
+  font-size: 35px;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  font-family: digital;
+  margin-top:50px;
+  border-bottom: 0;
+  box-sizing: border-box;
+  background-color: rgb(250, 255, 250);
+  padding: 15px;
+}
+
+#input {
+  border: solid gray 5px;
+  width: 45%;
+  height: 60px;
+  font-size: 53px;
+  font-family: digital;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: right;
+  border-top: 0;
+  box-sizing: border-box;
+  background-color: rgb(250, 255, 250);
+  padding-bottom: 15px;
+  padding-right: 15px;
+  border-bottom: 0;
+}
+
+button {
+  width: 80px;
+  height: 80px;
+  font-size: 30px;
+  justify-self: center;
+  align-self: center;
+  box-shadow: 3px 3px 3px;
+}
+
+button:active {
+  box-shadow: none;
+}
+
+.keyboard {
+  border: solid gray 5px;
+  border-radius: 1%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background-color: silver;
+  display: grid;
+  grid-template: 110px 110px 110px 110px 110px / 110px 110px 110px 110px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+  justify-self: center;
+  padding: 3%;
+  box-sizing: border-box;
+  margin-top: 0;
+
+}
+
+#delete, #deleteA {
+  height: 40px;
+  font-size: 30px;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+#delete {
+  margin-top: 40px;
+}
+
+#deleteA {
+  align-self: stretch;
+  margin-top: 15px;
+}
+
+.plus {
+  grid-row: 2 /span 2;
+  grid-column: 4;
+  height: 200px;
+}
+
+.enter {
+  grid-row: 4 /span 2;
+  grid-column: 4;
+  height: 200px;
+  font-weight: bold;
+}
+
+.cero {
+  grid-row: 5;
+  grid-column: 1 /span 2;
+  width: 200px;
+}
