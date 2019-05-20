@@ -1,0 +1,48 @@
+#test {
+  margin-right: 0;
+}
+
+#clock {
+  width: 5%;
+  height: auto;
+}
+
+#playIcon {
+  width: 3%;
+  height: auto;
+  position: absolute;
+  left: 95%;
+  top: 7%;
+}
+
+
+body {
+  font-size: 18px;
+  font-family: "Courier New";
+  font-weight: bold;
+  margin-left: %;
+}
+
+form {
+  position: absolute;
+  top: 20%;
+  left: 80%;
+}
+
+#runningNow {
+  color: red;
+  position: absolute;
+  left: 7%;
+  top: 5%;
+}
+
+#timer {
+  top: 5%;
+  right: 8%;
+  color: gray;
+  position: absolute;
+}
+
+#bar {
+  border: 5px solid brown;
+}

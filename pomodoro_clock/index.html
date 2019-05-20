@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+  <head>
+    <title>Pomodoh</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <img id="clock" src="pomodoro.jpg">
+    <img id="playIcon">
+    <h2 id="runningNow"></h2></br>
+    <h3 id="timer"></h3></br>
+    <div id="bar"></div>
+    <div>
+      <form>
+        Working minutes:
+        <select id="workingMinutes">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+          <option value="32">32</option>
+          <option value="33">33</option>
+          <option value="34">34</option>
+          <option value="35">35</option>
+          <option value="36">36</option>
+          <option value="37">37</option>
+          <option value="38">38</option>
+          <option value="39">39</option>
+          <option value="40">40</option>
+          <option value="41">41</option>
+          <option value="42">42</option>
+          <option value="43">43</option>
+          <option value="44">44</option>
+          <option value="45">45</option>
+          <option value="46">46</option>
+          <option value="47">47</option>
+          <option value="48">48</option>
+          <option value="49">49</option>
+          <option value="50">50</option>
+          <option value="51">51</option>
+          <option value="52">52</option>
+          <option value="53">53</option>
+          <option value="54">54</option>
+          <option value="55">55</option>
+          <option value="56">56</option>
+          <option value="57">57</option>
+          <option value="58">58</option>
+          <option value="59">59</option>
+          <option value="60">60</option>
+        </select></br></br>
+        Break (minutes):
+        <select id="breakMinutes">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+        </select>
+      </form>
+    </div>
+    <script>
+      document.getElementById("playIcon").addEventListener("click", controller);
+      document.getElementById("playIcon").src= "play.png";
+      document.getElementById("clock").addEventListener("click", reset);
+
+      var x;
+      var status = "off";
+      var timeAtPause;
+      var workingMinutesSelector = document.getElementById("workingMinutes");
+      var breakMinutesSelector = document.getElementById("breakMinutes");
+      var timeAtBegining;
+      var workingTimeGoal;
+      var breakTimeGoal;
+      var timeNoRan = 0;
+      var timeToRestart;
+      var timeRanPrevious = 0;
+      var timeRan = 0;
+
+      function controller() {
+        var workingMinutesSet = workingMinutesSelector.value;
+        var breakMinutesSet = breakMinutesSelector.value;
+        timeToRestart = new Date().getTime() + 1000;
+
+        if (workingMinutesSet == 0 && breakMinutesSet == 0) {
+            alert ("select time");
+            return;
+        }
+
+        if (timeAtBegining == undefined) {
+          timeAtBegining = new Date().getTime();
+        }
+
+        if (status == "off") {
+          workingMinutesSelector.disabled = true;
+          breakMinutesSelector.disabled = true;
+          document.getElementById("playIcon").src= "pause.png"
+
+          if (timeAtPause != undefined) {
+            timeNoRan += timeToRestart - timeAtPause;
+          }
+
+          workingTimeGoal = timeAtBegining + (workingMinutesSet * 60000) + timeNoRan;
+          breakTimeGoal = workingTimeGoal + (breakMinutesSet * 60000);
+          x = setInterval(timer, 1000, workingTimeGoal, breakTimeGoal);
+        } else {
+          clearInterval(x);
+          timeAtPause = new Date().getTime();
+          status = "off";
+          document.getElementById("playIcon").src= "play.png"
+        }
+      }
+
+      function timer(workingTimeGoalArg, breakTimeGoalArg) {
+        var timeNow = new Date().getTime();
+        var workingDistance = workingTimeGoalArg - timeNow + 2000;
+        var workingMinutesLeft = Math.floor(workingDistance / 60000);
+        var workingSecondsLeft = Math.floor((workingDistance % (60000)) / 1000);
+        var breakDistance = breakTimeGoalArg - timeNow + 3000;
+        var breakMinutesLeft = Math.floor(breakDistance / 60000);
+        var breakSecondsLeft = Math.floor((breakDistance % (60000)) / 1000);
+
+        if (workingDistance > 0 ) {
+          document.getElementById("runningNow").innerHTML = "Focus Time";
+          document.getElementById("timer").innerHTML = workingMinutesLeft + ":" + workingSecondsLeft;
+          status = "on";
+          if (workingSecondsLeft < 10) {
+            document.getElementById("timer").innerHTML = workingMinutesLeft + ":0" + workingSecondsLeft;
+            status = "on";
+          };
+        } else if (breakDistance > 0) {
+          document.getElementById("runningNow").innerHTML = "Break";
+          document.getElementById("timer").innerHTML = breakMinutesLeft + ":" + breakSecondsLeft;
+          status = "on";
+          if (breakSecondsLeft < 10) {
+            document.getElementById("timer").innerHTML = breakMinutesLeft + ":0" + breakSecondsLeft;
+            status = "on";
+          };
+        } else {
+          clearInterval(x);
+          document.getElementById("workingMinutes").disabled = false;
+          document.getElementById("breakMinutes").disabled = false;
+          status = "off"
+          timeAtBegining = undefined;
+          timeAtPause = undefined;
+          timeNoRan = 0;
+          document.getElementById("runningNow").innerHTML = "Time Out";
+          document.getElementById("timer").innerHTML = "zzz...";
+        }
+      }
+
+      function reset() {
+        clearInterval(x);
+        document.getElementById("workingMinutes").disabled = false;
+        document.getElementById("breakMinutes").disabled = false;
+        status = "off"
+        timeAtBegining = undefined;
+        timeAtPause = undefined;
+        timeNoRan = 0;
+        workingMinutesSelector.value = 0;
+        breakMinutesSelector.value = 0;
+        document.getElementById("runningNow").innerHTML = "";
+        document.getElementById("timer").innerHTML = "";
+      }
+    </script>
+  </body>
+</html>
